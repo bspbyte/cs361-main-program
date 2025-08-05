@@ -1,0 +1,29 @@
+Finance Expense Categorizer Microservice
+
+This microservice categorizes descriptions of transaction expenses based on keyword matches. The microservice provides functionality to match descriptions based on default categories and also to add custom categories.
+
+Communication Contract
+
+Requesting Data
+Your main program must request data from the microservice by using a ZeroMQ REQ socket. The microservice listens for keyword based financial transaction expenses and responds with the appropriate category label such as “Utilities” or “Entertainment”. Requests should be sent using socket.send_string(description)
+•	The “description” can be 1 or more words which describes the financial expense (e.g., “Starbucks North York”)
+
+Example Call (Python):
+socket.send_string(“Starbucks North York”)
+
+The microservice binds to a TCP endpoint: socket.bind(“tcp://*:6120”)
+
+Your main program should connect to this socket using the same port and protocol:
+socket.connect(“tcp://localhost:6120”)
+
+Receiving Data
+The Finance Categorizer Microservice receives a transaction description string, categorizes it using a default keyword dictionary and optional categories added by the user, and then sent back the resulting category back to the sender main program.
+
+Example (Python)
+response = socket.recv()
+print(f”Category for ‘{description}’: {response}”)
+
+UML Sequence Diagram
+
+![UML Diagram](CS361UMLBrandonSP.png)
+
